@@ -29,7 +29,7 @@ export default function BuilderLayout() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="w-1/5 border-r p-4">
+        <div className="w-1/6 border-r p-4">
           <SectionsSidebar
             activeSection={activeSection}
             setActiveSection={setActiveSection}
@@ -37,10 +37,10 @@ export default function BuilderLayout() {
         </div>
 
         {/* Form */}
-        <div className="w-2/5 p-6 overflow-y-auto">{renderForm()}</div>
+        <div className="w-1/3 p-6 overflow-y-auto">{renderForm()}</div>
 
         {/* Preview */}
-        <div className="w-2/5 bg-gray-50 p-6 overflow-y-auto">
+        <div className="flex-1 bg-gray-100 p-6 overflow-y-auto flex justify-center">
           <CVPreview />
         </div>
       </div>
