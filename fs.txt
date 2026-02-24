@@ -1,0 +1,65 @@
+src/
+ ├─ store/
+ │   ├─ store.js
+ │   ├─ cvSlice.js
+ │   └─ authSlice.js
+ │
+ ├─ services/
+ │   ├─ api.js
+ │   ├─ cvService.js
+ │   └─ authService.js
+ │
+ ├─ routes/
+ │   ├─ AppRouter.jsx
+ │   └─ ProtectedRoute.jsx
+ │
+ ├─ layout/
+ │   └─ BuilderLayout.jsx
+ │
+ ├─ components/
+ │   ├─ Navbar.jsx
+ │   ├─ SectionsSidebar.jsx
+ │   ├─ forms/
+ │   └─ preview/
+ │
+ ├─ pages/
+ │   ├─ Builder.jsx
+ │   ├─ Login.jsx
+ │   └─ Register.jsx
+ │
+ ├─ hooks/
+ ├─ constants/
+ ├─ assets/
+ │
+ ├─ App.jsx
+ └─ main.jsx
+
+main.jsx
+ └── App.jsx
+      └── AppRouter.jsx
+           ├── /login → Login.jsx
+           │        └── useAuth()
+           │              └── authService.login()
+           │                    └── dispatch(setUser)
+           │
+           ├── /register → Register.jsx
+           │        └── useAuth()
+           │              └── authService.register()
+           │
+           └── /builder → ProtectedRoute
+                    ├── checks authSlice (isAuthenticated)
+                    └── if true → Builder.jsx
+                              └── BuilderLayout.jsx
+                                   ├── Navbar.jsx
+                                   │      └── useAuth()
+                                   │            └── logout()
+                                   │
+                                   ├── SectionsSidebar.jsx
+                                   │      └── sets active section (local state)
+                                   │
+                                   ├── Dynamic Form (based on section)
+                                   │      └── useCV()
+                                   │            └── dispatch(update/add/remove)
+                                   │
+                                   └── CVPreview.jsx
+                                          └── useSelector(cv state)
