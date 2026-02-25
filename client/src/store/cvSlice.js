@@ -3,17 +3,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../services/api";
 
-/* =======================
-   FETCH FULL CV
-======================= */
+/* ======================= FETCH ======================= */
 export const fetchCV = createAsyncThunk("cv/fetchCV", async () => {
   const res = await api.get("/cv/");
   return res.data;
 });
 
-/* =======================
-   PERSONAL
-======================= */
+/* ======================= PERSONAL ======================= */
 export const savePersonal = createAsyncThunk(
   "cv/savePersonal",
   async (data) => {
@@ -22,9 +18,7 @@ export const savePersonal = createAsyncThunk(
   },
 );
 
-/* =======================
-   EDUCATION
-======================= */
+/* ======================= EDUCATION ======================= */
 export const createEducation = createAsyncThunk(
   "cv/createEducation",
   async (data) => {
@@ -49,9 +43,7 @@ export const deleteEducationAsync = createAsyncThunk(
   },
 );
 
-/* =======================
-   EXPERIENCE
-======================= */
+/* ======================= EXPERIENCE ======================= */
 export const createExperience = createAsyncThunk(
   "cv/createExperience",
   async (data) => {
@@ -76,9 +68,7 @@ export const deleteExperienceAsync = createAsyncThunk(
   },
 );
 
-/* =======================
-   SKILLS
-======================= */
+/* ======================= SKILLS ======================= */
 export const createSkill = createAsyncThunk("cv/createSkill", async (data) => {
   const res = await api.post("/skills/", data);
   return res.data;
@@ -92,9 +82,8 @@ export const deleteSkillAsync = createAsyncThunk(
   },
 );
 
-/* =======================
-   SLICE
-======================= */
+/* ======================= SLICE ======================= */
+
 const initialState = {
   personal: {},
   education: [],
@@ -107,14 +96,31 @@ const cvSlice = createSlice({
   name: "cv",
   initialState,
   reducers: {
-    // 🔥 Local instant preview update (DO NOT manually dispatch fulfilled)
+    /* 🔥 LOCAL UPDATES (NO API CALL) */
+
     updateLocalPersonal: (state, action) => {
       state.personal = action.payload;
     },
 
-    // Optional: reset on logout
+    updateEducationLocal: (state, action) => {
+      const { id, field, value } = action.payload;
+      const index = state.education.findIndex((e) => e.id === id);
+      if (index !== -1) {
+        state.education[index][field] = value;
+      }
+    },
+
+    updateExperienceLocal: (state, action) => {
+      const { id, field, value } = action.payload;
+      const index = state.experience.findIndex((e) => e.id === id);
+      if (index !== -1) {
+        state.experience[index][field] = value;
+      }
+    },
+
     resetCV: () => initialState,
   },
+
   extraReducers: (builder) => {
     builder
 
@@ -180,6 +186,11 @@ const cvSlice = createSlice({
   },
 });
 
-export const { updateLocalPersonal, resetCV } = cvSlice.actions;
+export const {
+  updateLocalPersonal,
+  updateEducationLocal,
+  updateExperienceLocal,
+  resetCV,
+} = cvSlice.actions;
 
 export default cvSlice.reducer;

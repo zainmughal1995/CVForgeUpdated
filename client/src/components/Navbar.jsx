@@ -24,7 +24,7 @@ export default function Navbar() {
         },
         jsPDF: {
           unit: "px",
-          format: [794, 1123], // Exact A4
+          format: [700, 1123],
           orientation: "portrait",
         },
       })
@@ -33,20 +33,52 @@ export default function Navbar() {
   };
 
   return (
-    <div className="h-14 px-6 flex items-center justify-between border-b bg-white">
-      <div className="text-lg font-semibold">CVForger</div>
+    <div
+      className="h-16 px-8 flex items-center justify-between 
+                    bg-white/70 backdrop-blur-xl 
+                    border-b border-white/40 
+                    shadow-[0_8px_30px_rgba(0,0,0,0.05)]"
+    >
+      {/* Logo */}
+      <div
+        className="text-xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 
+                      bg-clip-text text-transparent tracking-tight"
+      >
+        CVForger
+      </div>
 
-      <div className="flex items-center gap-4">
+      {/* Right Section */}
+      <div className="flex items-center gap-6">
+        {/* Download Button */}
         <button
           onClick={handleDownload}
-          className="px-4 py-2 bg-black text-white text-sm rounded"
+          className="px-5 py-2.5 text-sm font-medium rounded-xl
+                     bg-gradient-to-r from-indigo-600 to-purple-600
+                     text-white shadow-lg shadow-indigo-500/20
+                     hover:scale-105 hover:shadow-indigo-500/30
+                     transition-all duration-200"
         >
           Download
         </button>
 
-        <span className="text-sm">{user?.email}</span>
+        {/* User Email */}
+        <div
+          className="px-4 py-2 text-sm rounded-xl
+                        bg-white/60 backdrop-blur-md
+                        border border-white/50
+                        shadow-inner"
+        >
+          {user?.email}
+        </div>
 
-        <button onClick={handleLogout} className="text-sm text-red-500">
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className="text-sm font-medium px-4 py-2 rounded-xl
+                     bg-red-500/10 text-red-600
+                     hover:bg-red-500/20
+                     transition-all duration-200"
+        >
           Logout
         </button>
       </div>

@@ -5,8 +5,60 @@
   @apply bg-gray-50 text-gray-900;
 } */
 
-h1,
-h2,
-h3 {
-  margin: 0;
+/* ===============================
+   MODERN GLASS SCROLLBAR
+================================= */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(99, 102, 241, 0.7),
+    rgba(139, 92, 246, 0.7)
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(79, 70, 229, 0.9),
+    rgba(124, 58, 237, 0.9)
+  );
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.7) rgba(255, 255, 255, 0.25);
+}
+
+/* Allow normal breaking */
+#cv-preview {
+  page-break-inside: auto;
+}
+
+/* Never break inside a section */
+.section-block {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Prevent heading from separating from content */
+.section-title {
+  page-break-after: avoid;
+  break-after: avoid;
 }
