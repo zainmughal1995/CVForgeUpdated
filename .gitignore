@@ -1,0 +1,86 @@
+# ================================
+# Django + React .gitignore
+# ================================
+
+# ----------------
+# Python / Django
+# ----------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Migrations (optional — remove if you track them)
+# */migrations/
+# !*/migrations/__init__.py
+
+# Environment variables
+.env
+.env.*
+
+# Coverage / Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ----------------
+# React / Node
+# ----------------
+node_modules/
+build/
+dist/
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Parcel / Vite / CRA cache
+.cache/
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# ----------------
+# Docker (optional)
+# ----------------
+*.pid
+*.seed
+*.out
+*.err
+
+# ----------------
+# Misc
+# ----------------
+*.swp
+*.swo
