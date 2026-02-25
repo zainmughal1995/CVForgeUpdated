@@ -1,3 +1,6 @@
+// Navbar.jsx
+// Responsive only — functionality preserved
+
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
 import html2pdf from "html2pdf.js";
@@ -14,7 +17,6 @@ export default function Navbar() {
     const element = document.getElementById("cv-preview");
     if (!element) return;
 
-    // Create wrapper
     const wrapper = document.createElement("div");
     wrapper.style.position = "fixed";
     wrapper.style.left = "0";
@@ -31,12 +33,11 @@ export default function Navbar() {
     wrapper.appendChild(clone);
     document.body.appendChild(wrapper);
 
-    // Allow layout to complete
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     await html2pdf()
       .set({
-        margin: [0, 0, 10, 10], // real print margins
+        margin: [0, 0, 10, 10],
         filename: "ATS_CV.pdf",
         pagebreak: { mode: ["avoid-all", "css", "legacy"] },
         html2canvas: {
@@ -45,7 +46,7 @@ export default function Navbar() {
           scrollY: 0,
         },
         jsPDF: {
-          unit: "mm", // ✅ CRITICAL FIX
+          unit: "mm",
           format: "a4",
           orientation: "portrait",
         },
@@ -58,25 +59,29 @@ export default function Navbar() {
 
   return (
     <div
-      className="h-16 px-8 flex items-center justify-between 
-                    bg-white/70 backdrop-blur-xl 
-                    border-b border-white/40 
-                    shadow-[0_8px_30px_rgba(0,0,0,0.05)]"
+      className="min-h-16 px-4 sm:px-6 lg:px-8 py-3
+                 flex flex-col sm:flex-row
+                 items-start sm:items-center
+                 justify-between gap-4
+                 bg-white/70 backdrop-blur-xl
+                 border-b border-white/40
+                 shadow-[0_8px_30px_rgba(0,0,0,0.05)]"
     >
       {/* Logo */}
       <div
-        className="text-xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 
-                      bg-clip-text text-transparent tracking-tight"
+        className="text-lg sm:text-xl font-semibold
+                   bg-gradient-to-r from-indigo-600 to-purple-600
+                   bg-clip-text text-transparent tracking-tight"
       >
         CVForger
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-6">
-        {/* Download Button */}
+      <div className="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6">
+        {/* Download */}
         <button
           onClick={handleDownload}
-          className="px-5 py-2.5 text-sm font-medium rounded-xl
+          className="w-full sm:w-auto px-4 sm:px-5 py-2.5 text-sm font-medium rounded-xl
                      bg-gradient-to-r from-indigo-600 to-purple-600
                      text-white shadow-lg shadow-indigo-500/20
                      hover:scale-105 hover:shadow-indigo-500/30
@@ -87,10 +92,10 @@ export default function Navbar() {
 
         {/* User Email */}
         <div
-          className="px-4 py-2 text-sm rounded-xl
-                        bg-white/60 backdrop-blur-md
-                        border border-white/50
-                        shadow-inner"
+          className="w-full sm:w-auto text-center sm:text-left
+                     px-4 py-2 text-sm rounded-xl
+                     bg-white/60 backdrop-blur-md
+                     border border-white/50 shadow-inner truncate"
         >
           {user?.email}
         </div>
@@ -98,7 +103,7 @@ export default function Navbar() {
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="text-sm font-medium px-4 py-2 rounded-xl
+          className="w-full sm:w-auto text-sm font-medium px-4 py-2 rounded-xl
                      bg-red-500/10 text-red-600
                      hover:bg-red-500/20
                      transition-all duration-200"
