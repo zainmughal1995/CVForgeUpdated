@@ -63,12 +63,12 @@ ROOT_URLCONF = 'config.urls'
 
 CORS_ALLOWED_ORIGINS = [
     "https://cv-forge-updated-zzzz-git-main-zainulabdin1995s-projects.vercel.app",
-    "https://cv-forge-updated-zzzz.vercel.app/"
+    "https://cv-forge-updated-zzzz.vercel.app"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://cv-forge-updated-zzzz-git-main-zainulabdin1995s-projects.vercel.app",
-    "https://cv-forge-updated-zzzz.vercel.app/"
+    "https://cv-forge-updated-zzzz.vercel.app"
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
