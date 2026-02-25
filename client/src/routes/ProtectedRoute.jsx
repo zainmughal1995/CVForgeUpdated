@@ -5,8 +5,8 @@ export default function ProtectedRoute({ children }) {
   const token = useSelector((state) => state.auth.token);
 
   if (!token) {
-    // return <Navigate to="/login" replace />;
-    return children;
+    return <Navigate to="/login" replace />;
+    // return children; #Use it to bypass login
   }
 
   return children;

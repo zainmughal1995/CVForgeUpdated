@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "./../services/api";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -7,11 +8,23 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    // temporary mock register
-    navigate("/login");
+    try {
+      const res = await api.post("/register/", {
+        username: email, // still using email as username
+        email: email, // ✅ ADD THIS (backend requires it)
+        password: password,
+      });
+
+      localStorage.setItem("token", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
+
+      navigate("/builder");
+    } catch (err) {
+      console.log("REGISTER ERROR:", err.response?.data);
+    }
   };
 
   return (
@@ -28,6 +41,7 @@ export default function Register() {
           className="w-full border p-2 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
@@ -36,6 +50,7 @@ export default function Register() {
           className="w-full border p-2 rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
         <button

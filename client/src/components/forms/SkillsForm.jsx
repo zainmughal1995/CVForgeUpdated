@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addSkill, removeSkill } from "../../store/cvSlice";
+import { createSkill, deleteSkillAsync } from "../../store/cvSlice";
 import { useState } from "react";
 
 export default function SkillsForm() {
@@ -10,12 +10,13 @@ export default function SkillsForm() {
   const handleAdd = () => {
     if (!skillInput.trim()) return;
 
-    dispatch(addSkill(skillInput.trim()));
+    dispatch(createSkill({ name: skillInput.trim() }));
+
     setSkillInput("");
   };
 
-  const handleRemove = (skill) => {
-    dispatch(removeSkill(skill));
+  const handleRemove = (id) => {
+    dispatch(deleteSkillAsync(id));
   };
 
   return (
@@ -40,17 +41,17 @@ export default function SkillsForm() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
+        {skills.map((skill) => (
           <div
-            key={index}
+            key={skill.id}
             className="px-3 py-1 bg-gray-200 rounded text-sm flex items-center gap-2"
           >
-            {skill}
+            {skill.name}
             <button
-              onClick={() => handleRemove(skill)}
+              onClick={() => handleRemove(skill.id)}
               className="text-red-500"
             >
-              ×
+              x
             </button>
           </div>
         ))}

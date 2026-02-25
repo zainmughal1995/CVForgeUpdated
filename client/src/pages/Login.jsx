@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setAuth } from "../store/authSlice";
+import api from "./../services/api";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -10,20 +11,31 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // temporary mock login
-    const fakeToken = "sample_token_123";
+    try {
+      const res = await api.post("/token/", {
+        username: email, // email used as username
+        password: password,
+      });
 
-    dispatch(
-      setAuth({
-        user: { email },
-        token: fakeToken,
-      }),
-    );
+      const { access, refresh } = res.data;
 
-    navigate("/builder");
+      localStorage.setItem("token", access);
+      localStorage.setItem("refresh", refresh);
+
+      dispatch(
+        setAuth({
+          user: { email },
+          token: access,
+        }),
+      );
+
+      navigate("/builder");
+    } catch (err) {
+      console.log("LOGIN ERROR:", err.response?.data);
+    }
   };
 
   return (
@@ -40,6 +52,7 @@ export default function Login() {
           className="w-full border p-2 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
@@ -48,6 +61,7 @@ export default function Login() {
           className="w-full border p-2 rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
         <button

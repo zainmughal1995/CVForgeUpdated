@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addExperience,
-  updateExperience,
-  removeExperience,
+  createExperience,
+  updateExperienceAsync,
+  deleteExperienceAsync,
 } from "../../store/cvSlice";
 
 export default function ExperienceForm() {
@@ -11,28 +11,34 @@ export default function ExperienceForm() {
 
   const handleAdd = () => {
     dispatch(
-      addExperience({
-        id: crypto.randomUUID(),
+      createExperience({
+        title: "",
         company: "",
-        role: "",
-        startDate: "",
-        endDate: "",
+        start_year: "",
+        end_year: "",
         description: "",
       }),
     );
   };
 
   const handleChange = (id, field, value) => {
+    const current = experience.find((e) => e.id === id);
+
+    const updated = {
+      ...current,
+      [field]: value,
+    };
+
     dispatch(
-      updateExperience({
+      updateExperienceAsync({
         id,
-        data: { [field]: value },
+        data: updated,
       }),
     );
   };
 
   const handleRemove = (id) => {
-    dispatch(removeExperience(id));
+    dispatch(deleteExperienceAsync(id));
   };
 
   return (
@@ -45,42 +51,38 @@ export default function ExperienceForm() {
             type="text"
             placeholder="Company"
             className="w-full border p-2 rounded"
-            value={exp.company}
+            value={exp.company || ""}
             onChange={(e) => handleChange(exp.id, "company", e.target.value)}
           />
 
           <input
             type="text"
-            placeholder="Role"
+            placeholder="Title"
             className="w-full border p-2 rounded"
-            value={exp.role}
-            onChange={(e) => handleChange(exp.id, "role", e.target.value)}
+            value={exp.title || ""}
+            onChange={(e) => handleChange(exp.id, "title", e.target.value)}
           />
 
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Start Date"
-              className="w-1/2 border p-2 rounded"
-              value={exp.startDate}
-              onChange={(e) =>
-                handleChange(exp.id, "startDate", e.target.value)
-              }
-            />
+          <input
+            type="text"
+            placeholder="Start Year"
+            className="w-full border p-2 rounded"
+            value={exp.start_year || ""}
+            onChange={(e) => handleChange(exp.id, "start_year", e.target.value)}
+          />
 
-            <input
-              type="text"
-              placeholder="End Date"
-              className="w-1/2 border p-2 rounded"
-              value={exp.endDate}
-              onChange={(e) => handleChange(exp.id, "endDate", e.target.value)}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="End Year"
+            className="w-full border p-2 rounded"
+            value={exp.end_year || ""}
+            onChange={(e) => handleChange(exp.id, "end_year", e.target.value)}
+          />
 
           <textarea
             placeholder="Description"
             className="w-full border p-2 rounded h-24"
-            value={exp.description}
+            value={exp.description || ""}
             onChange={(e) =>
               handleChange(exp.id, "description", e.target.value)
             }

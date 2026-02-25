@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addEducation,
-  updateEducation,
-  removeEducation,
+  createEducation,
+  updateEducationAsync,
+  deleteEducationAsync,
 } from "../../store/cvSlice";
 
 export default function EducationForm() {
@@ -11,27 +11,33 @@ export default function EducationForm() {
 
   const handleAdd = () => {
     dispatch(
-      addEducation({
-        id: crypto.randomUUID(),
-        school: "",
+      createEducation({
+        institution: "",
         degree: "",
-        startDate: "",
-        endDate: "",
+        start_year: "",
+        end_year: "",
       }),
     );
   };
 
   const handleChange = (id, field, value) => {
+    const current = education.find((e) => e.id === id);
+
+    const updated = {
+      ...current,
+      [field]: value,
+    };
+
     dispatch(
-      updateEducation({
+      updateEducationAsync({
         id,
-        data: { [field]: value },
+        data: updated,
       }),
     );
   };
 
   const handleRemove = (id) => {
-    dispatch(removeEducation(id));
+    dispatch(deleteEducationAsync(id));
   };
 
   return (
@@ -42,39 +48,37 @@ export default function EducationForm() {
         <div key={edu.id} className="border p-4 rounded space-y-2">
           <input
             type="text"
-            placeholder="School"
+            placeholder="Institution"
             className="w-full border p-2 rounded"
-            value={edu.school}
-            onChange={(e) => handleChange(edu.id, "school", e.target.value)}
+            value={edu.institution || ""}
+            onChange={(e) =>
+              handleChange(edu.id, "institution", e.target.value)
+            }
           />
 
           <input
             type="text"
             placeholder="Degree"
             className="w-full border p-2 rounded"
-            value={edu.degree}
+            value={edu.degree || ""}
             onChange={(e) => handleChange(edu.id, "degree", e.target.value)}
           />
 
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Start Date"
-              className="w-1/2 border p-2 rounded"
-              value={edu.startDate}
-              onChange={(e) =>
-                handleChange(edu.id, "startDate", e.target.value)
-              }
-            />
+          <input
+            type="text"
+            placeholder="Start Year"
+            className="w-full border p-2 rounded"
+            value={edu.start_year || ""}
+            onChange={(e) => handleChange(edu.id, "start_year", e.target.value)}
+          />
 
-            <input
-              type="text"
-              placeholder="End Date"
-              className="w-1/2 border p-2 rounded"
-              value={edu.endDate}
-              onChange={(e) => handleChange(edu.id, "endDate", e.target.value)}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="End Year"
+            className="w-full border p-2 rounded"
+            value={edu.end_year || ""}
+            onChange={(e) => handleChange(edu.id, "end_year", e.target.value)}
+          />
 
           <button
             onClick={() => handleRemove(edu.id)}

@@ -6,6 +6,6 @@ export const fetchCV = async () => {
 };
 
 export const saveCV = async (cvData) => {
-  const response = await api.post("/cv/", cvData);
+  const response = await api.put("/cv/personal/", cvData);
   return response.data;
 };

@@ -7,15 +7,7 @@ export default function CVPreview() {
 
   const SectionHeader = ({ title }) => (
     <div style={{ marginTop: "32px", marginBottom: "12px" }}>
-      <h2
-        style={{
-          fontSize: "18px",
-          fontWeight: 600,
-          margin: 0,
-        }}
-      >
-        {title}
-      </h2>
+      <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0 }}>{title}</h2>
       <hr
         style={{
           border: "none",
@@ -33,8 +25,8 @@ export default function CVPreview() {
         background: "#ffffff",
         color: "#000000",
         fontFamily: "Times New Roman, serif",
-        width: "794px", // exact A4 width at 96dpi
-        minHeight: "1123px", // exact A4 height at 96dpi
+        width: "794px",
+        minHeight: "1123px",
         padding: "60px",
         margin: "0 auto",
         boxSizing: "border-box",
@@ -43,7 +35,7 @@ export default function CVPreview() {
       {/* HEADER */}
       <div style={{ textAlign: "center" }}>
         <h1 style={{ fontSize: "28px", fontWeight: 600, margin: 0 }}>
-          {personal.fullName || "Your Name"}
+          {personal.full_name || "Your Name"}
         </h1>
 
         <p style={{ marginTop: "8px", fontSize: "14px" }}>
@@ -57,7 +49,7 @@ export default function CVPreview() {
         </p>
       </div>
 
-      {/* PROFESSIONAL SUMMARY */}
+      {/* SUMMARY */}
       {personal.summary && (
         <>
           <SectionHeader title="Professional Summary" />
@@ -74,29 +66,18 @@ export default function CVPreview() {
 
           {education.map((edu) => (
             <div key={edu.id} style={{ marginTop: "12px", fontSize: "14px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ fontWeight: 500, margin: 0 }}>{edu.degree}</p>
+
                 <p style={{ fontStyle: "italic", margin: 0 }}>
-                  [{edu.startDate} – {edu.endDate}]
+                  {edu.start_year || ""} {edu.start_year && edu.end_year && "–"}{" "}
+                  {edu.end_year || ""}
                 </p>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontStyle: "italic",
-                  marginTop: "2px",
-                }}
-              >
-                <p style={{ margin: 0 }}>{edu.school}</p>
-                <p style={{ margin: 0 }}>{edu.location}</p>
-              </div>
+              <p style={{ fontStyle: "italic", marginTop: "2px" }}>
+                {edu.institution}
+              </p>
             </div>
           ))}
         </>
@@ -109,21 +90,18 @@ export default function CVPreview() {
 
           {experience.map((exp) => (
             <div key={exp.id} style={{ marginTop: "16px", fontSize: "14px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
-                  <p style={{ fontWeight: 500, margin: 0 }}>{exp.role}</p>
+                  <p style={{ fontWeight: 500, margin: 0 }}>{exp.title}</p>
                   <p style={{ fontStyle: "italic", margin: 0 }}>
                     {exp.company}
                   </p>
                 </div>
 
                 <p style={{ fontStyle: "italic", margin: 0 }}>
-                  [{exp.startDate} – {exp.endDate}]
+                  {exp.start_year || ""}
+                  {exp.start_year && exp.end_year && " – "}
+                  {exp.end_year || ""}
                 </p>
               </div>
 
@@ -142,10 +120,34 @@ export default function CVPreview() {
       )}
 
       {/* SKILLS */}
-      {skills.length > 0 && (
+      {skills && skills.length > 0 && (
         <>
           <SectionHeader title="Skills" />
-          <p style={{ fontSize: "14px" }}>{skills.join(", ")}</p>
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "8px",
+              marginTop: "8px",
+            }}
+          >
+            {skills
+              .filter((s) => s && s.name)
+              .map((s) => (
+                <span
+                  key={s.id}
+                  style={{
+                    padding: "6px 12px",
+                    backgroundColor: "#e5e5e5",
+                    borderRadius: "6px",
+                    fontSize: "13px",
+                  }}
+                >
+                  {s.name}
+                </span>
+              ))}
+          </div>
         </>
       )}
     </div>
