@@ -6,7 +6,10 @@ export default function CVPreview() {
   );
 
   const SectionHeader = ({ title }) => (
-    <div style={{ marginTop: "32px", marginBottom: "12px" }}>
+    <div
+      className="section-title"
+      style={{ marginTop: "32px", marginBottom: "12px" }}
+    >
       <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0 }}>{title}</h2>
       <hr
         style={{
@@ -25,8 +28,7 @@ export default function CVPreview() {
         background: "#ffffff",
         color: "#000000",
         fontFamily: "Times New Roman, serif",
-        width: "700px",
-        // minHeight: "1123px",
+        width: "700px", // preview width
         padding: "60px",
         margin: "0 auto",
         boxSizing: "border-box",
@@ -51,17 +53,17 @@ export default function CVPreview() {
 
       {/* SUMMARY */}
       {personal.summary && (
-        <>
+        <div className="section-block">
           <SectionHeader title="Professional Summary" />
           <p style={{ fontSize: "14px", textAlign: "justify" }}>
             {personal.summary}
           </p>
-        </>
+        </div>
       )}
 
       {/* EDUCATION */}
       {education.length > 0 && (
-        <>
+        <div className="section-block">
           <SectionHeader title="Education" />
 
           {education.map((edu) => (
@@ -70,7 +72,8 @@ export default function CVPreview() {
                 <p style={{ fontWeight: 500, margin: 0 }}>{edu.degree}</p>
 
                 <p style={{ fontStyle: "italic", margin: 0 }}>
-                  {edu.start_year || ""} {edu.start_year && edu.end_year && "–"}{" "}
+                  {edu.start_year || ""}
+                  {edu.start_year && edu.end_year && " – "}
                   {edu.end_year || ""}
                 </p>
               </div>
@@ -80,12 +83,12 @@ export default function CVPreview() {
               </p>
             </div>
           ))}
-        </>
+        </div>
       )}
 
       {/* EXPERIENCE */}
       {experience.length > 0 && (
-        <>
+        <div className="section-block">
           <SectionHeader title="Experience" />
 
           {experience.map((exp) => (
@@ -116,12 +119,12 @@ export default function CVPreview() {
               )}
             </div>
           ))}
-        </>
+        </div>
       )}
 
       {/* SKILLS */}
       {skills && skills.length > 0 && (
-        <>
+        <div className="section-block">
           <SectionHeader title="Skills" />
 
           <div
@@ -148,7 +151,7 @@ export default function CVPreview() {
                 </span>
               ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

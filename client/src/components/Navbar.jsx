@@ -10,26 +10,50 @@ export default function Navbar() {
     dispatch(logout());
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const element = document.getElementById("cv-preview");
     if (!element) return;
 
-    html2pdf()
+    // Create wrapper
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "fixed";
+    wrapper.style.left = "0";
+    wrapper.style.top = "0";
+    wrapper.style.width = "794px";
+    wrapper.style.background = "#ffffff";
+    wrapper.style.zIndex = "-1";
+    wrapper.style.opacity = "0";
+
+    const clone = element.cloneNode(true);
+    clone.style.width = "794px";
+    clone.style.margin = "0";
+
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    // Allow layout to complete
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    await html2pdf()
       .set({
-        margin: 0,
+        margin: [0, 0, 10, 10], // real print margins
         filename: "ATS_CV.pdf",
+        pagebreak: { mode: ["avoid-all", "css", "legacy"] },
         html2canvas: {
           scale: 2,
           useCORS: true,
+          scrollY: 0,
         },
         jsPDF: {
-          unit: "px",
-          format: [700, 1123],
+          unit: "mm", // ✅ CRITICAL FIX
+          format: "a4",
           orientation: "portrait",
         },
       })
-      .from(element)
+      .from(clone)
       .save();
+
+    document.body.removeChild(wrapper);
   };
 
   return (

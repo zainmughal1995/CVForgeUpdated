@@ -50,15 +50,3 @@
 #cv-preview {
   page-break-inside: auto;
 }
-
-/* Never break inside a section */
-.section-block {
-  page-break-inside: avoid;
-  break-inside: avoid;
-}
-
-/* Prevent heading from separating from content */
-.section-title {
-  page-break-after: avoid;
-  break-after: avoid;
-}
